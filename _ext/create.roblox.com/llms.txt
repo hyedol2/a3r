@@ -1,0 +1,46 @@
+# Roblox Creator Hub
+
+> The Roblox Creator Hub (https://create.roblox.com) is the official platform for building, publishing, managing, and monetizing experiences and content on Roblox. Available to all Roblox creators, it provides the tools and resources needed to learn, manage, and grow your content — from publishing experiences and avatar items to analytics, monetization, collaboration, and cashing out earnings.
+
+The Creator Hub is the web companion to [Roblox Studio](https://create.roblox.com/docs/studio/setup) (the desktop 3D creation engine). Studio is where experiences are built; the Creator Hub is where they are configured, published, monetized, analyzed, and managed.
+
+Most of the Creator Hub is a signed-in product: the Dashboard, analytics, monetization, and settings all require logging in with a Roblox account, and these routes are not crawlable (see `robots.txt`, which disallows `/dashboard/` and `/talent/`). The pages below marked **(public)** are accessible without an account; everything else **requires login** and is personalized to the creator's own account, groups, and content.
+
+## Public landing pages
+
+- [Creator Hub home](https://create.roblox.com/): Entry point and overview of creator tools and resources **(public)**
+- [Creator Documentation](https://create.roblox.com/docs): Tutorials and API reference for building on Roblox **(public)**
+  - [Creator Documentation llms.txt](https://create.roblox.com/docs/llms.txt)
+- [Creator Store](https://create.roblox.com/store): Official digital marketplace where creators can discover, share, and buy development assets **(public)**
+- [Create, Scale & Monetize](https://create.roblox.com/creator): Developer-focused landing page on creating, scaling, and monetizing on Roblox **(public)**
+- [Creator Rewards](https://create.roblox.com/rewards): Information about the Creator Rewards program **(public)**
+- [Creator Programs](https://create.roblox.com/build): Jumpstart and Incubator programs to help turn a vision into a launch-ready game, with marketing support and direct access to the Roblox team **(public)**
+- [Roblox Inspire](https://create.roblox.com/inspire): Global creator event with local meetups, virtual workshops, and a Game Jam **(public)**
+- [Updates](https://create.roblox.com/updates) and [Creator Roadmap](https://create.roblox.com/updates/roadmap): Latest creator-platform news and a preview of upcoming features and capabilities **(public)**
+- [Marketplace licenses](https://create.roblox.com/explore/licenses): Browse asset license listings in the Creator Store **(public)**
+
+## Dashboard (requires login)
+
+The Dashboard at `/dashboard` is the authenticated workspace for managing creations and account. Key areas:
+
+- **Creations** (`/dashboard/creations`): Manage experiences, places, avatar items (catalog), bundles, the "look" avatar items, and Creator Store assets; upload and configure content.
+- **Experience management** (`/dashboard/creations/experiences/[experienceId]`): Per-experience configuration — access & permissions, places, badges, passes, developer products, collaborators, events, environments, localization, server management, alerts, safety/bans, player support, and more.
+- **Analytics** (`/dashboard/analytics` and per-experience analytics): Engagement, retention, acquisition, audience, monetization, economy, performance, crashes/errors, and funnels — data and insights to grow an audience.
+- **Monetization**: In-experience purchases (developer products, passes, subscriptions), avatar items, immersive ads, managed/optimized pricing, and commerce.
+- **Developer Exchange (DevEx)** (`/dashboard/devex`): Cash out Robux earnings to real currency.
+- **Groups** (`/dashboard/group`): Manage group profile, members, roles, payouts, and moderation.
+- **IP & Rights** (`/dashboard/ip`, `/dashboard/rights-manager`, `/dashboard/license-manager`): Manage intellectual property, licensing agreements, listings, and rights/claims.
+
+## Settings (requires login)
+
+- [Settings](https://create.roblox.com/settings/preferences): Account preferences, notifications, webhooks, data collection, advanced settings, and program eligibility.
+
+## Other Roblox creator resources
+
+- [Developer Forum](https://devforum.roblox.com/): Community discussions and support **(public)**
+- [Roblox Talent Hub](https://create.roblox.com/talent): Find collaborators for scripting, modeling, and more **(requires login)**
+
+## Notes
+
+- Sitemap: https://create.roblox.com/sitemap.xml
+- Because the core product is behind authentication and personalized, large portions of the site cannot be browsed or indexed without signing in with a Roblox account.
